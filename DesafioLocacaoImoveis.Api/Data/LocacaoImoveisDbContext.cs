@@ -6,9 +6,10 @@ namespace DesafioLocacaoImoveis.Api.Data
 {
     public class LocacaoImoveisDbContext : DbContext
     {
-        public LocacaoImoveisDbContext(DbContextOptions<LocacaoImoveisDbContext> options)
-            : base(options)
+        private readonly IConfiguration _configuracaoAppSettings;
+        public LocacaoImoveisDbContext(IConfiguration configuracaoAppSettings)
         {
+            _configuracaoAppSettings = configuracaoAppSettings;
         }
 
         public DbSet<Imoveis> Imoveis { get; set; }
@@ -17,6 +18,18 @@ namespace DesafioLocacaoImoveis.Api.Data
         {
             modelBuilder.ApplyConfiguration(new ImovelMap());
             base.OnModelCreating(modelBuilder);
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                var stringConexao = _configuracaoAppSettings.GetConnectionString("DataBase")?.ToString();
+                if (!string.IsNullOrEmpty(stringConexao))
+                {
+                    optionsBuilder.UseMySql(stringConexao, ServerVersion.AutoDetect(stringConexao));
+                }
+            }
         }
     }
 }

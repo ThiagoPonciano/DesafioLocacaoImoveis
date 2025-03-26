@@ -12,7 +12,11 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddHttpClient<ViaCepService>();
+builder.Services.AddHttpClient<ViaCepService>(client =>
+{
+    client.BaseAddress = new Uri("https://viacep.com.br/ws/");
+    client.Timeout = TimeSpan.FromSeconds(10);
+});
 
 builder.Services.AddDbContext<LocacaoImoveisDbContext>(options =>
     {
