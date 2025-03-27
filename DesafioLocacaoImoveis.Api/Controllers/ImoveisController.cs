@@ -1,5 +1,6 @@
 ﻿using DesafioLocacaoImoveis.Api.Domain.Entities;
 using DesafioLocacaoImoveis.Api.Domain.Services;
+using DesafioLocacaoImoveis.Api.Enums;
 using DesafioLocacaoImoveis.Api.Repositories.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -39,6 +40,11 @@ namespace DesafioLocacaoImoveis.Api.Controllers
         [HttpPost]
         public async Task<ActionResult<Imoveis>> Cadastrar([FromBody] Imoveis imovelEntity)
         {
+            if (!StatusImovelExtensions.EhValido((int)imovelEntity.Status))
+            {
+                return BadRequest("O status do imóvel informado é inválido");
+            }
+
             try
             {
                 var enderecoViaCep = await _viaCepService.ObterEnderecoPorCep(imovelEntity.Cep);
@@ -63,6 +69,11 @@ namespace DesafioLocacaoImoveis.Api.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<Imoveis>> Atualizar(Guid id, [FromBody] Imoveis imovelEntity)
         {
+            if (!StatusImovelExtensions.EhValido((int)imovelEntity.Status))
+            {
+                return BadRequest("O status do imóvel informado é inválido");
+            }
+
             try
             {
                 var enderecoViaCep = await _viaCepService.ObterEnderecoPorCep(imovelEntity.Cep);

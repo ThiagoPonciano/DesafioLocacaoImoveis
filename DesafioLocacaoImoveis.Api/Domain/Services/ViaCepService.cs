@@ -26,7 +26,13 @@ namespace DesafioLocacaoImoveis.Api.Domain.Services
             if(response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                return JsonSerializer.Deserialize<ViaCepResponse>(content);
+
+                var serializer = new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                };
+
+                return JsonSerializer.Deserialize<ViaCepResponse>(content, serializer);
             }
 
             return null;
