@@ -26,8 +26,6 @@ builder.Services.AddDbContext<LocacaoImoveisDbContext>(options =>
 
 builder.Services.AddScoped<ILocacaoImoveisRepositorie, ImoveisRepositorie>();
 
-builder.Services.AddScoped<ViaCepService>();
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

@@ -1,9 +1,10 @@
-﻿using DesafioLocacaoImoveis.Api.Responses;
+﻿using DesafioLocacaoImoveis.Api.Repositories.Interfaces;
+using DesafioLocacaoImoveis.Api.Responses;
 using System.Text.Json;
 
 namespace DesafioLocacaoImoveis.Api.Domain.Services
 {
-    public class ViaCepService
+    public class ViaCepService : IViaCepService
     {
         private readonly HttpClient _httpClient;
 
