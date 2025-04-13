@@ -1,0 +1,6 @@
+services:
+  desafiolocacaoimoveis.api:
+    image: ${DOCKER_REGISTRY-}desafiolocacaoimoveisapi
+    build:
+      context: .
+      dockerfile: DesafioLocacaoImoveis.Api/Dockerfile
